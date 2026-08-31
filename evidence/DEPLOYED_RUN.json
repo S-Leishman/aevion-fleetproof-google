@@ -1,5 +1,5 @@
 {
-  "base_url": "https://fleetproof-672mjmzgtq-uc.a.run.app",
+  "base_url": "https://fleetproof-837076960937.us-central1.run.app",
   "health": {
     "status": "ok",
     "store": "FirestoreStore(project=aevion-shield, database=(default))",
@@ -9,7 +9,7 @@
     "model_location": "global"
   },
   "index_status": 200,
-  "mission_id": "msn-17ba75bebbb4",
+  "mission_id": "msn-2d3d04a2b896",
   "hold_decision": {
     "verdict": "HOLD",
     "action_id": "act-publish-notice",
@@ -23,7 +23,7 @@
   "duplicate_refused": true,
   "chain_integrity": "VERIFIED",
   "receipt_count": 15,
-  "head_digest": "c5f40f5451808c4a446b6a43f0f112fe926e0a317855da719a2dfeee7e16d47b",
+  "head_digest": "ac006463ef93239f69d53d24428341dfb9f689cfea3941072b4d5e6b7a30aa97",
   "routing_sources": [
     "gemini"
   ],

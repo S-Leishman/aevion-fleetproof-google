@@ -6,3 +6,6 @@ venv/
 *.egg-info/
 .env
 .DS_Store
+
+# local demo recording artifacts
+.aevion_demo/
