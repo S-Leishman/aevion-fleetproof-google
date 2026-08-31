@@ -1,6 +1,6 @@
 """HTTP surface for the FleetProof control tower.
 
-Store selection is explicit and reported by /healthz: if Firestore is
+Store selection is explicit and reported by /api/health: if Firestore is
 configured it is used, otherwise the in-memory store is used and the UI says
 so. The app never silently degrades to ephemeral state while implying
 durability.
@@ -40,7 +40,7 @@ def build_store() -> tuple[Store, str]:
         # than in the middle of a demo.
         store.list_missions()
         return store, "Firestore connected."
-    except Exception as exc:  # noqa: BLE001 - reported in /healthz
+    except Exception as exc:  # noqa: BLE001 - reported in /api/health
         return InMemoryStore(), (
             f"Firestore unavailable ({type(exc).__name__}: {exc}); "
             "using ephemeral in-memory state."
@@ -77,8 +77,14 @@ class DenialRequest(BaseModel):
     reason: str = Field(default="Not authorized.", min_length=1, max_length=500)
 
 
-@app.get("/healthz")
-def healthz() -> dict[str, Any]:
+@app.get("/api/health")
+def health() -> dict[str, Any]:
+    """Report store selection and model configuration.
+
+    Deliberately not served at /healthz: Cloud Run's runtime proxy intercepts
+    that path before it reaches the container, so a health endpoint there is
+    unreachable in the deployed environment.
+    """
     return {
         "status": "ok",
         "store": STORE.describe(),

@@ -1,0 +1,32 @@
+{
+  "base_url": "https://fleetproof-672mjmzgtq-uc.a.run.app",
+  "health": {
+    "status": "ok",
+    "store": "FirestoreStore(project=aevion-shield, database=(default))",
+    "store_note": "Firestore connected.",
+    "project": "aevion-shield",
+    "model": "gemini-3.5-flash",
+    "model_location": "global"
+  },
+  "index_status": 200,
+  "mission_id": "msn-17ba75bebbb4",
+  "hold_decision": {
+    "verdict": "HOLD",
+    "action_id": "act-publish-notice",
+    "consequence": "CONSEQUENTIAL",
+    "capability_present": true,
+    "policy_pass": true,
+    "human_authority_present": false,
+    "rationale": "CAPABILITY PRESENT. POLICY PASS. OWNER AUTHORITY ABSENT. Action 'publish_notice' is CONSEQUENTIAL and targets https://status.example-enterprise.com/incidents. Held pending explicit human approval.",
+    "policy_version": "fleetproof-policy-1.0.0"
+  },
+  "duplicate_refused": true,
+  "chain_integrity": "VERIFIED",
+  "receipt_count": 15,
+  "head_digest": "c5f40f5451808c4a446b6a43f0f112fe926e0a317855da719a2dfeee7e16d47b",
+  "routing_sources": [
+    "gemini"
+  ],
+  "failures": [],
+  "result": "PASS"
+}

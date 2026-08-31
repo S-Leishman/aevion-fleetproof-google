@@ -161,7 +161,7 @@ uvicorn fleetproof.web:app --reload --port 8080
 ```
 
 Open <http://127.0.0.1:8080>. Without `GOOGLE_CLOUD_PROJECT` the app runs on
-ephemeral in-memory state and `/healthz` says so explicitly.
+ephemeral in-memory state and `/api/health` says so explicitly.
 
 ## Tests
 

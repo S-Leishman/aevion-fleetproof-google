@@ -20,7 +20,7 @@ async function api(path, options) {
 
 async function loadHealth() {
   try {
-    const health = await api("/healthz");
+    const health = await api("/api/health");
     el("chip-store").innerHTML = `STORE <b>${
       health.store.startsWith("Firestore") ? "FIRESTORE" : "IN-MEMORY"
     }</b>`;
