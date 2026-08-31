@@ -21,9 +21,29 @@ incorporated into this repository is identified explicitly. The FleetProof
 application, Gemini integration, Google Cloud deployment, workflow, tests, and
 submission artifacts were created for this hackathon.
 
-At the time of writing, no pre-existing Aevion source files have been copied
-into this repository. Everything under `fleetproof/`, `web/`, `tests/`, and
-`scripts/` was written for this submission.
+**No pre-existing Aevion source files have been copied into this repository.**
+Everything under `fleetproof/`, `web/`, `tests/`, and `scripts/` was written
+for this submission.
+
+The conceptual lineage is public and worth naming rather than implying. Aevion
+maintains [ProofOS](https://github.com/Aevion-ai/ProofOS), which implements a
+constitutional halt gate and a receipt chain, and publishes verification SDKs
+using Ed25519 signatures. FleetProof is a new application of that family of
+ideas to the enterprise agent-fleet problem on Google Cloud. Where the
+pre-existing work is stronger, this README says so plainly rather than
+claiming parity — see [Honest limitations](#honest-limitations); in particular
+FleetProof's receipts are hash-chained only, whereas Aevion's prior evidence
+work uses Ed25519 signatures.
+
+What is genuinely new here, and not inherited from prior Aevion work:
+
+- the Gemini/GenAI SDK routing layer and the model-routes/policy-authorizes split
+- the consequence-class action catalog, owned by the catalog rather than the
+  proposing agent
+- least-privilege agent selection with a deterministic fallback
+- per-mission, per-action scoped human grants
+- exactly-once execution semantics bound to approval
+- the Cloud Run + Firestore deployment and the control-tower UI
 
 ---
 
