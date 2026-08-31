@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>Aevion FleetProof — Agent Control Tower</title>
+<link rel="stylesheet" href="/static/app.css" />
+</head>
+<body>
+<header class="hud">
+  <div class="hud-left">
+    <div class="brand">AEVION <span>FLEETPROOF</span></div>
+    <div class="subtitle">Airworthiness control for enterprise AI agents</div>
+  </div>
+  <div class="hud-right">
+    <div class="chip" id="chip-store">STORE <b>—</b></div>
+    <div class="chip" id="chip-model">MODEL <b>—</b></div>
+    <div class="chip verdict" id="chip-authority">AUTHORITY <b>IDLE</b></div>
+  </div>
+</header>
+
+<main>
+  <section class="panel mission">
+    <h2>Mission</h2>
+    <textarea id="objective" rows="3">Assess the open fleet incident backlog and publish a remediation notice to the customer status page.</textarea>
+    <div class="row">
+      <button id="btn-create" class="primary">Receive mission</button>
+      <button id="btn-advance" disabled>Advance</button>
+      <button id="btn-replay" disabled>Replay</button>
+    </div>
+    <div class="meta" id="mission-meta">No active mission.</div>
+  </section>
+
+  <section class="panel gate" id="gate-panel" hidden>
+    <h2>Authority gate</h2>
+    <div class="gate-grid" id="gate-grid"></div>
+    <div class="gate-rationale" id="gate-rationale"></div>
+    <div class="row" id="gate-actions" hidden>
+      <button id="btn-approve" class="approve">Approve as owner</button>
+      <button id="btn-deny" class="deny">Refuse</button>
+    </div>
+  </section>
+
+  <section class="panel">
+    <h2>Registered fleet</h2>
+    <div id="fleet" class="fleet"></div>
+  </section>
+
+  <section class="panel">
+    <h2>Evidence chain <span class="integrity" id="integrity"></span></h2>
+    <ol class="timeline" id="timeline"><li class="empty">No receipts yet.</li></ol>
+  </section>
+</main>
+
+<footer>
+  <p>
+    Downstream effects in this demonstration are simulated: no real customer
+    status page is written. The control plane being demonstrated — routing,
+    consequence classification, the authority gate, human approval, and the
+    hash-chained receipt record — is real and runs on every action.
+  </p>
+</footer>
+
+<script src="/static/app.js"></script>
+</body>
+</html>

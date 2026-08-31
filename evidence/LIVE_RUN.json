@@ -1,0 +1,492 @@
+{
+  "project": "aevion-shield",
+  "objective": "Assess the open fleet incident backlog and publish a remediation notice to the customer status page.",
+  "mission_id": "msn-320ca2ac4957",
+  "routing_sources": [
+    "gemini"
+  ],
+  "steps": [
+    {
+      "mission": {
+        "mission_id": "msn-320ca2ac4957",
+        "objective": "Assess the open fleet incident backlog and publish a remediation notice to the customer status page.",
+        "state": "EXECUTED",
+        "assigned_agent_id": "telemetry-analyst",
+        "selection_rationale": "The telemetry-analyst agent holds the required read_telemetry capability and has the least privilege among the capable agents since its capabilities are strictly limited to observation.",
+        "selection_source": "gemini",
+        "completed_actions": [
+          "act-read-telemetry"
+        ],
+        "pending_action_id": null
+      },
+      "action": {
+        "action_id": "act-read-telemetry",
+        "name": "read_telemetry",
+        "description": "Read the open incident backlog for the fleet.",
+        "consequence": "OBSERVATION",
+        "target": "internal://telemetry/incidents"
+      },
+      "decision": {
+        "verdict": "ALLOW",
+        "action_id": "act-read-telemetry",
+        "consequence": "OBSERVATION",
+        "capability_present": true,
+        "policy_pass": true,
+        "human_authority_present": false,
+        "rationale": "OBSERVATION action within registered ceiling; no human authority required.",
+        "policy_version": "fleetproof-policy-1.0.0"
+      },
+      "receipt": {
+        "receipt_id": "rcpt-4231596ae666",
+        "mission_id": "msn-320ca2ac4957",
+        "sequence": 4,
+        "event": "EFFECT_EXECUTED",
+        "actor": "telemetry-analyst",
+        "timestamp": "2026-08-31T08:52:41.357+00:00",
+        "detail": {
+          "action_id": "act-read-telemetry",
+          "action": "read_telemetry",
+          "consequence": "OBSERVATION",
+          "target": "internal://telemetry/incidents",
+          "human_authority_present": false,
+          "effect": "Read 3 open incidents: elevated p99 latency in eu-west, two degraded ingest workers."
+        },
+        "parent_digest": "88441bbd66d05164937a55ddee2290a89858155d8895923400e86d2debb3a1d3",
+        "digest": "0281ac12d998caa0ac9a43f61fcfcea94b613056ec74a050b4bdd51e8a4a865f"
+      },
+      "executed": true,
+      "message": "Executed read_telemetry."
+    },
+    {
+      "mission": {
+        "mission_id": "msn-320ca2ac4957",
+        "objective": "Assess the open fleet incident backlog and publish a remediation notice to the customer status page.",
+        "state": "EXECUTED",
+        "assigned_agent_id": "remediation-writer",
+        "selection_rationale": "The remediation-writer agent holds the required draft_notice capability and is less privileged than the status-publisher agent, which possesses additional consequential capabilities.",
+        "selection_source": "gemini",
+        "completed_actions": [
+          "act-read-telemetry",
+          "act-draft-notice"
+        ],
+        "pending_action_id": null
+      },
+      "action": {
+        "action_id": "act-draft-notice",
+        "name": "draft_notice",
+        "description": "Draft the customer-facing remediation notice internally.",
+        "consequence": "REVERSIBLE",
+        "target": "internal://drafts/remediation-notice"
+      },
+      "decision": {
+        "verdict": "ALLOW",
+        "action_id": "act-draft-notice",
+        "consequence": "REVERSIBLE",
+        "capability_present": true,
+        "policy_pass": true,
+        "human_authority_present": false,
+        "rationale": "REVERSIBLE action within registered ceiling; no human authority required.",
+        "policy_version": "fleetproof-policy-1.0.0"
+      },
+      "receipt": {
+        "receipt_id": "rcpt-26f68af371a9",
+        "mission_id": "msn-320ca2ac4957",
+        "sequence": 8,
+        "event": "EFFECT_EXECUTED",
+        "actor": "remediation-writer",
+        "timestamp": "2026-08-31T08:52:54.553+00:00",
+        "detail": {
+          "action_id": "act-draft-notice",
+          "action": "draft_notice",
+          "consequence": "REVERSIBLE",
+          "target": "internal://drafts/remediation-notice",
+          "human_authority_present": false,
+          "effect": "Drafted internal remediation notice covering the eu-west latency regression and ingest worker restarts."
+        },
+        "parent_digest": "63a42fd91f8072af7360cc1939a319830fd41f534f2912d5ec81071f8f732aaf",
+        "digest": "cc360fe44b17340d6258a8b02a96e2d0ec7635574756fd47c54554faff7aa7cd"
+      },
+      "executed": true,
+      "message": "Executed draft_notice."
+    },
+    {
+      "mission": {
+        "mission_id": "msn-320ca2ac4957",
+        "objective": "Assess the open fleet incident backlog and publish a remediation notice to the customer status page.",
+        "state": "HELD",
+        "assigned_agent_id": "status-publisher",
+        "selection_rationale": "The status-publisher is the only registered agent that possesses the required publish_notice capability.",
+        "selection_source": "gemini",
+        "completed_actions": [
+          "act-read-telemetry",
+          "act-draft-notice"
+        ],
+        "pending_action_id": "act-publish-notice"
+      },
+      "action": {
+        "action_id": "act-publish-notice",
+        "name": "publish_notice",
+        "description": "Publish the remediation notice to the public status page.",
+        "consequence": "CONSEQUENTIAL",
+        "target": "https://status.example-enterprise.com/incidents"
+      },
+      "decision": {
+        "verdict": "HOLD",
+        "action_id": "act-publish-notice",
+        "consequence": "CONSEQUENTIAL",
+        "capability_present": true,
+        "policy_pass": true,
+        "human_authority_present": false,
+        "rationale": "CAPABILITY PRESENT. POLICY PASS. OWNER AUTHORITY ABSENT. Action 'publish_notice' is CONSEQUENTIAL and targets https://status.example-enterprise.com/incidents. Held pending explicit human approval.",
+        "policy_version": "fleetproof-policy-1.0.0"
+      },
+      "receipt": {
+        "receipt_id": "rcpt-30feaffb24c6",
+        "mission_id": "msn-320ca2ac4957",
+        "sequence": 11,
+        "event": "POLICY_DECISION",
+        "actor": "policy-engine",
+        "timestamp": "2026-08-31T08:53:08.855+00:00",
+        "detail": {
+          "verdict": "HOLD",
+          "action_id": "act-publish-notice",
+          "consequence": "CONSEQUENTIAL",
+          "capability_present": true,
+          "policy_pass": true,
+          "human_authority_present": false,
+          "rationale": "CAPABILITY PRESENT. POLICY PASS. OWNER AUTHORITY ABSENT. Action 'publish_notice' is CONSEQUENTIAL and targets https://status.example-enterprise.com/incidents. Held pending explicit human approval.",
+          "policy_version": "fleetproof-policy-1.0.0"
+        },
+        "parent_digest": "5c1d0badacd25ab5c74524d215ccef40d767128e9c5f2036909233e343ac7349",
+        "digest": "baefc0815cba8840ddd10f352f9aef81a752f8fd473759dde00811c71fe7831e"
+      },
+      "executed": false,
+      "message": "HELD: publish_notice requires human authority. No external effect has occurred."
+    },
+    {
+      "mission": {
+        "mission_id": "msn-320ca2ac4957",
+        "objective": "Assess the open fleet incident backlog and publish a remediation notice to the customer status page.",
+        "state": "COMPLETE",
+        "assigned_agent_id": "status-publisher",
+        "selection_rationale": "The status-publisher is the only registered agent that possesses the required publish_notice capability.",
+        "selection_source": "gemini",
+        "completed_actions": [
+          "act-read-telemetry",
+          "act-draft-notice",
+          "act-publish-notice"
+        ],
+        "pending_action_id": null
+      },
+      "action": {
+        "action_id": "act-publish-notice",
+        "name": "publish_notice",
+        "description": "Publish the remediation notice to the public status page.",
+        "consequence": "CONSEQUENTIAL",
+        "target": "https://status.example-enterprise.com/incidents"
+      },
+      "decision": {
+        "verdict": "ALLOW",
+        "action_id": "act-publish-notice",
+        "consequence": "CONSEQUENTIAL",
+        "capability_present": true,
+        "policy_pass": true,
+        "human_authority_present": true,
+        "rationale": "Consequential action authorized by explicit human grant scoped to mission msn-320ca2ac4957 and action act-publish-notice.",
+        "policy_version": "fleetproof-policy-1.0.0"
+      },
+      "receipt": {
+        "receipt_id": "rcpt-d501d5c4d080",
+        "mission_id": "msn-320ca2ac4957",
+        "sequence": 14,
+        "event": "EFFECT_EXECUTED",
+        "actor": "status-publisher",
+        "timestamp": "2026-08-31T08:53:11.322+00:00",
+        "detail": {
+          "action_id": "act-publish-notice",
+          "action": "publish_notice",
+          "consequence": "CONSEQUENTIAL",
+          "target": "https://status.example-enterprise.com/incidents",
+          "human_authority_present": true,
+          "effect": "Published remediation notice to the customer status page (simulated external endpoint)."
+        },
+        "parent_digest": "e5172c26710e162e827d752d179f7d77f1fe580a792a47b9826d3b3dd1be1638",
+        "digest": "ccf0130985013a9c1e6195ff583caad74fab859a8bfbdbbf5f03bbe9f8ac4efa"
+      },
+      "executed": true,
+      "message": "Executed publish_notice."
+    }
+  ],
+  "replay": {
+    "mission_id": "msn-320ca2ac4957",
+    "chain_integrity": "VERIFIED",
+    "chain_error": null,
+    "receipt_count": 15,
+    "head_digest": "ccf0130985013a9c1e6195ff583caad74fab859a8bfbdbbf5f03bbe9f8ac4efa",
+    "receipts": [
+      {
+        "receipt_id": "rcpt-d7a61a7f5acf",
+        "mission_id": "msn-320ca2ac4957",
+        "sequence": 0,
+        "event": "MISSION_RECEIVED",
+        "actor": "control-tower",
+        "timestamp": "2026-08-31T08:52:21.104+00:00",
+        "detail": {
+          "objective": "Assess the open fleet incident backlog and publish a remediation notice to the customer status page."
+        },
+        "parent_digest": "0000000000000000000000000000000000000000000000000000000000000000",
+        "digest": "7054238116d9a94ef0f1d54e0a21092f1cf999ea43cef452ad647d56388e5e18"
+      },
+      {
+        "receipt_id": "rcpt-1d77bcf0bd8e",
+        "mission_id": "msn-320ca2ac4957",
+        "sequence": 1,
+        "event": "AGENT_SELECTED",
+        "actor": "control-tower",
+        "timestamp": "2026-08-31T08:52:39.593+00:00",
+        "detail": {
+          "agent_id": "telemetry-analyst",
+          "model": "gemini-3.5-flash",
+          "capability": "read_telemetry",
+          "rationale": "The telemetry-analyst agent holds the required read_telemetry capability and has the least privilege among the capable agents since its capabilities are strictly limited to observation.",
+          "selection_source": "gemini"
+        },
+        "parent_digest": "7054238116d9a94ef0f1d54e0a21092f1cf999ea43cef452ad647d56388e5e18",
+        "digest": "f094fd65f5b354b4b32df59343833a2656a55e3fdd523e5d6c1bf32238b55714"
+      },
+      {
+        "receipt_id": "rcpt-1d7ed9a59b26",
+        "mission_id": "msn-320ca2ac4957",
+        "sequence": 2,
+        "event": "ACTION_PROPOSED",
+        "actor": "telemetry-analyst",
+        "timestamp": "2026-08-31T08:52:40.221+00:00",
+        "detail": {
+          "action": "read_telemetry",
+          "action_id": "act-read-telemetry",
+          "consequence": "OBSERVATION",
+          "target": "internal://telemetry/incidents"
+        },
+        "parent_digest": "f094fd65f5b354b4b32df59343833a2656a55e3fdd523e5d6c1bf32238b55714",
+        "digest": "64c3b912e48e34d35743316ff60ba7b10bf7284668cf4fda5916e40ddd1c935e"
+      },
+      {
+        "receipt_id": "rcpt-bd69739954c5",
+        "mission_id": "msn-320ca2ac4957",
+        "sequence": 3,
+        "event": "POLICY_DECISION",
+        "actor": "policy-engine",
+        "timestamp": "2026-08-31T08:52:40.792+00:00",
+        "detail": {
+          "action_id": "act-read-telemetry",
+          "capability_present": true,
+          "policy_pass": true,
+          "policy_version": "fleetproof-policy-1.0.0",
+          "consequence": "OBSERVATION",
+          "human_authority_present": false,
+          "rationale": "OBSERVATION action within registered ceiling; no human authority required.",
+          "verdict": "ALLOW"
+        },
+        "parent_digest": "64c3b912e48e34d35743316ff60ba7b10bf7284668cf4fda5916e40ddd1c935e",
+        "digest": "88441bbd66d05164937a55ddee2290a89858155d8895923400e86d2debb3a1d3"
+      },
+      {
+        "receipt_id": "rcpt-4231596ae666",
+        "mission_id": "msn-320ca2ac4957",
+        "sequence": 4,
+        "event": "EFFECT_EXECUTED",
+        "actor": "telemetry-analyst",
+        "timestamp": "2026-08-31T08:52:41.357+00:00",
+        "detail": {
+          "action": "read_telemetry",
+          "action_id": "act-read-telemetry",
+          "consequence": "OBSERVATION",
+          "effect": "Read 3 open incidents: elevated p99 latency in eu-west, two degraded ingest workers.",
+          "human_authority_present": false,
+          "target": "internal://telemetry/incidents"
+        },
+        "parent_digest": "88441bbd66d05164937a55ddee2290a89858155d8895923400e86d2debb3a1d3",
+        "digest": "0281ac12d998caa0ac9a43f61fcfcea94b613056ec74a050b4bdd51e8a4a865f"
+      },
+      {
+        "receipt_id": "rcpt-e9dc80dbc813",
+        "mission_id": "msn-320ca2ac4957",
+        "sequence": 5,
+        "event": "AGENT_SELECTED",
+        "actor": "control-tower",
+        "timestamp": "2026-08-31T08:52:52.653+00:00",
+        "detail": {
+          "agent_id": "remediation-writer",
+          "model": "gemini-3.5-flash",
+          "capability": "draft_notice",
+          "rationale": "The remediation-writer agent holds the required draft_notice capability and is less privileged than the status-publisher agent, which possesses additional consequential capabilities.",
+          "selection_source": "gemini"
+        },
+        "parent_digest": "0281ac12d998caa0ac9a43f61fcfcea94b613056ec74a050b4bdd51e8a4a865f",
+        "digest": "b28722e92516c228e834faedebf915ef241823de3385a384ded4207e9a40cd51"
+      },
+      {
+        "receipt_id": "rcpt-8dfd6ea9f712",
+        "mission_id": "msn-320ca2ac4957",
+        "sequence": 6,
+        "event": "ACTION_PROPOSED",
+        "actor": "remediation-writer",
+        "timestamp": "2026-08-31T08:52:53.343+00:00",
+        "detail": {
+          "action": "draft_notice",
+          "action_id": "act-draft-notice",
+          "consequence": "REVERSIBLE",
+          "target": "internal://drafts/remediation-notice"
+        },
+        "parent_digest": "b28722e92516c228e834faedebf915ef241823de3385a384ded4207e9a40cd51",
+        "digest": "e47268653a351d4d9442c77889d1551b07f93fc0f24ce257af3fce0795adfb30"
+      },
+      {
+        "receipt_id": "rcpt-478032935dfb",
+        "mission_id": "msn-320ca2ac4957",
+        "sequence": 7,
+        "event": "POLICY_DECISION",
+        "actor": "policy-engine",
+        "timestamp": "2026-08-31T08:52:53.935+00:00",
+        "detail": {
+          "action_id": "act-draft-notice",
+          "capability_present": true,
+          "policy_pass": true,
+          "policy_version": "fleetproof-policy-1.0.0",
+          "consequence": "REVERSIBLE",
+          "human_authority_present": false,
+          "rationale": "REVERSIBLE action within registered ceiling; no human authority required.",
+          "verdict": "ALLOW"
+        },
+        "parent_digest": "e47268653a351d4d9442c77889d1551b07f93fc0f24ce257af3fce0795adfb30",
+        "digest": "63a42fd91f8072af7360cc1939a319830fd41f534f2912d5ec81071f8f732aaf"
+      },
+      {
+        "receipt_id": "rcpt-26f68af371a9",
+        "mission_id": "msn-320ca2ac4957",
+        "sequence": 8,
+        "event": "EFFECT_EXECUTED",
+        "actor": "remediation-writer",
+        "timestamp": "2026-08-31T08:52:54.553+00:00",
+        "detail": {
+          "action": "draft_notice",
+          "action_id": "act-draft-notice",
+          "consequence": "REVERSIBLE",
+          "effect": "Drafted internal remediation notice covering the eu-west latency regression and ingest worker restarts.",
+          "human_authority_present": false,
+          "target": "internal://drafts/remediation-notice"
+        },
+        "parent_digest": "63a42fd91f8072af7360cc1939a319830fd41f534f2912d5ec81071f8f732aaf",
+        "digest": "cc360fe44b17340d6258a8b02a96e2d0ec7635574756fd47c54554faff7aa7cd"
+      },
+      {
+        "receipt_id": "rcpt-7ef0256d3801",
+        "mission_id": "msn-320ca2ac4957",
+        "sequence": 9,
+        "event": "AGENT_SELECTED",
+        "actor": "control-tower",
+        "timestamp": "2026-08-31T08:53:07.718+00:00",
+        "detail": {
+          "agent_id": "status-publisher",
+          "model": "gemini-3.5-flash",
+          "capability": "publish_notice",
+          "rationale": "The status-publisher is the only registered agent that possesses the required publish_notice capability.",
+          "selection_source": "gemini"
+        },
+        "parent_digest": "cc360fe44b17340d6258a8b02a96e2d0ec7635574756fd47c54554faff7aa7cd",
+        "digest": "f977ed73941ea94cd03a2822b2bef242c4601d088342818f7165efe62a6abdb8"
+      },
+      {
+        "receipt_id": "rcpt-5df92c66c2f8",
+        "mission_id": "msn-320ca2ac4957",
+        "sequence": 10,
+        "event": "ACTION_PROPOSED",
+        "actor": "status-publisher",
+        "timestamp": "2026-08-31T08:53:08.293+00:00",
+        "detail": {
+          "action": "publish_notice",
+          "action_id": "act-publish-notice",
+          "consequence": "CONSEQUENTIAL",
+          "target": "https://status.example-enterprise.com/incidents"
+        },
+        "parent_digest": "f977ed73941ea94cd03a2822b2bef242c4601d088342818f7165efe62a6abdb8",
+        "digest": "5c1d0badacd25ab5c74524d215ccef40d767128e9c5f2036909233e343ac7349"
+      },
+      {
+        "receipt_id": "rcpt-30feaffb24c6",
+        "mission_id": "msn-320ca2ac4957",
+        "sequence": 11,
+        "event": "POLICY_DECISION",
+        "actor": "policy-engine",
+        "timestamp": "2026-08-31T08:53:08.855+00:00",
+        "detail": {
+          "action_id": "act-publish-notice",
+          "capability_present": true,
+          "policy_pass": true,
+          "policy_version": "fleetproof-policy-1.0.0",
+          "consequence": "CONSEQUENTIAL",
+          "human_authority_present": false,
+          "rationale": "CAPABILITY PRESENT. POLICY PASS. OWNER AUTHORITY ABSENT. Action 'publish_notice' is CONSEQUENTIAL and targets https://status.example-enterprise.com/incidents. Held pending explicit human approval.",
+          "verdict": "HOLD"
+        },
+        "parent_digest": "5c1d0badacd25ab5c74524d215ccef40d767128e9c5f2036909233e343ac7349",
+        "digest": "baefc0815cba8840ddd10f352f9aef81a752f8fd473759dde00811c71fe7831e"
+      },
+      {
+        "receipt_id": "rcpt-1b6855026392",
+        "mission_id": "msn-320ca2ac4957",
+        "sequence": 12,
+        "event": "HUMAN_AUTHORITY_GRANTED",
+        "actor": "owner",
+        "timestamp": "2026-08-31T08:53:09.883+00:00",
+        "detail": {
+          "action_id": "act-publish-notice",
+          "granted_at": "2026-08-31T08:53:09.463+00:00"
+        },
+        "parent_digest": "baefc0815cba8840ddd10f352f9aef81a752f8fd473759dde00811c71fe7831e",
+        "digest": "2d9a549d873739609468d31c9cb4ab5c449604865f11e57ee007b4e16e387c4b"
+      },
+      {
+        "receipt_id": "rcpt-98c569d61d6f",
+        "mission_id": "msn-320ca2ac4957",
+        "sequence": 13,
+        "event": "POLICY_DECISION",
+        "actor": "policy-engine",
+        "timestamp": "2026-08-31T08:53:10.611+00:00",
+        "detail": {
+          "action_id": "act-publish-notice",
+          "capability_present": true,
+          "policy_pass": true,
+          "policy_version": "fleetproof-policy-1.0.0",
+          "consequence": "CONSEQUENTIAL",
+          "human_authority_present": true,
+          "rationale": "Consequential action authorized by explicit human grant scoped to mission msn-320ca2ac4957 and action act-publish-notice.",
+          "verdict": "ALLOW"
+        },
+        "parent_digest": "2d9a549d873739609468d31c9cb4ab5c449604865f11e57ee007b4e16e387c4b",
+        "digest": "e5172c26710e162e827d752d179f7d77f1fe580a792a47b9826d3b3dd1be1638"
+      },
+      {
+        "receipt_id": "rcpt-d501d5c4d080",
+        "mission_id": "msn-320ca2ac4957",
+        "sequence": 14,
+        "event": "EFFECT_EXECUTED",
+        "actor": "status-publisher",
+        "timestamp": "2026-08-31T08:53:11.322+00:00",
+        "detail": {
+          "action": "publish_notice",
+          "action_id": "act-publish-notice",
+          "consequence": "CONSEQUENTIAL",
+          "effect": "Published remediation notice to the customer status page (simulated external endpoint).",
+          "human_authority_present": true,
+          "target": "https://status.example-enterprise.com/incidents"
+        },
+        "parent_digest": "e5172c26710e162e827d752d179f7d77f1fe580a792a47b9826d3b3dd1be1638",
+        "digest": "ccf0130985013a9c1e6195ff583caad74fab859a8bfbdbbf5f03bbe9f8ac4efa"
+      }
+    ]
+  },
+  "double_approval_refused": true,
+  "failures": [],
+  "result": "PASS"
+}
