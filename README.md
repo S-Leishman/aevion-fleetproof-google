@@ -10,6 +10,16 @@ what happened.
 Submitted to the **All Things Agentic** hackathon, category **Fortified
 Enterprise Fleet**.
 
+## Status
+
+**PROTOTYPE — student submission.** A working vertical slice, deployed and
+verified on Google Cloud, not a production system. Downstream effects are
+simulated; the control plane is real. See
+[Honest limitations](#honest-limitations) for the precise boundary.
+
+This is an experimental project in a student namespace. For the canonical
+Aevion LLC engineering estate, see [Aevion-ai](https://github.com/Aevion-ai).
+
 ---
 
 ## Prior-work disclosure
